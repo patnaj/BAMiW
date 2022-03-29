@@ -18,4 +18,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AvatarGenerator\AvatarGenerator.csproj" />
+  </ItemGroup>
+
 </Project>

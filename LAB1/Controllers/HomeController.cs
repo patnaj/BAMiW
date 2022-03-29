@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LAB1.Models;
 using LAB1.Data;
+using LAB1.Views.Home;
 
 //using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -100,16 +101,16 @@ namespace LAB1.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public string LogInfo(string find = null)
+        public IActionResult LogInfo(LogInfo model)
         {
-            
-            var cmd = System.IO.File.Exists(@"/bin/bash") ? @"/bin/bash" : "cmd.exe";
-            var arg = System.IO.File.Exists(@"/bin/bash") ? $"-c {find}" : $"/C {find}";
+            if(model.Result == "")
+                return View(model);
 
-            var psi = new ProcessStartInfo
+            var cmd = System.IO.File.Exists(@"/bin/bash") ? @"/bin/bash" : "cmd.exe";
+            var arg = System.IO.File.Exists(@"/bin/bash") ? $"-c \"echo {model.Message}  \"" : $"/C \"echo {model.Message} \"";
+
+            var psi = new ProcessStartInfo(cmd, arg)
             {
-                FileName = cmd,
-                Arguments = arg,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
@@ -120,26 +121,26 @@ namespace LAB1.Controllers
                 StartInfo = psi
             };
 
-            string result = "";
+            model.Result = "";
 
             proc.Start();
             Task.WaitAll(
                 Task.Run(() => {
                 while (!proc.StandardOutput.EndOfStream)
                 {
-                    result += proc.StandardOutput.ReadLine();                    
+                    model.Result += proc.StandardOutput.ReadLine();                    
                 }
                 }), 
                 Task.Run(() => {
                 while (!proc.StandardError.EndOfStream)
                 {
-                    result += proc.StandardError.ReadLine();
+                    model.Result += proc.StandardError.ReadLine();
                 }})
             );
 
-
             proc.WaitForExit();
-            return proc.ExitCode.ToString() + result;
+            model.Result = $"{proc.ExitCode}: {model.Result}";
+            return View(model);
         }
 
 

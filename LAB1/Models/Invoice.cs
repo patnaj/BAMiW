@@ -12,6 +12,8 @@ namespace LAB1.Models{
         public DateTime Date { get; set; }
         [Required]
         public string Address { get; set; }
+        public string Icon { get; set; }
+        
         public IList<InvoiceModel> Invoices {get;set;}
 
         [ForeignKey("User")]

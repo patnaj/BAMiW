@@ -1,6 +1,6 @@
-﻿@model IList<LAB1.Models.InvoiceModel>
+@model LAB1.Views.Home.LogInfo
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "LogInfo";
 }
 
 <div class="text-center">
@@ -12,30 +12,14 @@
     <form class="form-inline">
         <input name="id" type="hidden" value="@ViewBag.ID">
         <div class="form-group mb-2">
-            <label for="findId">Szukaj:</label>
-            <input value="@ViewBag.find" name="find" type="text" class="form-control" id="findId" aria-describedby="szukan pozycja" placeholder="szukan pozycja">
+            <label asp-for="Message"/>
+            <input asp-for="Message" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary mb-2">Szukaj</button>
     </form>
+    <div>
+        @Model.Result
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">@Html.DisplayNameFor(m=>m[0].ID)</th>
-            <th scope="col">@Html.DisplayNameFor(m=>m[0].Date)</th>
-            <th scope="col">@Html.DisplayNameFor(m=>m[0].Address)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-            <th>@item.ID</th>
-            <td>@item.Date</td>
-            <td>@item.Address</td>
-            </tr>
-            }
-        </tbody>
-    </table>
 
 </div>
