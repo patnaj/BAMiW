@@ -5,27 +5,34 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using LAB1.Models;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace LAB1.Data
 {
+    internal static class ContectHelper{
+        public static UserModel setPass(this UserModel user,string password){
+            var hasher = new PasswordHasher<UserModel>();
+            //user.PasswordHash = hasher.HashPassword(user, password);
+            user.PasswordHash = hasher.HashPassword(null, password);
+            return user;
+        }
+    }
+
     public class ApplicationDbContext : IdentityDbContext<UserModel, RoleModel, int>
     {
+        
+
 
         //public DbSet<UserModel> Users {get;set;}
         public DbSet<InvoiceModel> Invoices {get;set;}
 
         public DbSet<InvoiceItemModel> InvoiceItems {get;set;}
+        public DbSet<Message> Messages { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-        }
-
-        string hash(string text){
-            var sha1 = System.Security.Cryptography.SHA1.Create();
-            return Convert.ToBase64String(sha1.ComputeHash(Encoding.Unicode.GetBytes(text)));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -38,13 +45,16 @@ namespace LAB1.Data
                     new RoleModel(){Id=2, Name="USER", NormalizedName="USER"}                    
                 );
 
-            //builder.Entity<UserModel>().HasKey( i=>i.Id);
-
             builder.Entity<UserModel>()
                 .HasData(
-                    new UserModel(){Id = 1, UserName="Adam Nowak", NormalizedUserName="Adam Nowak", Email="adam@example.com", NormalizedEmail="adam@example.com", EmailConfirmed=true, PasswordHash= hash("test1"), SecurityStamp = string.Empty},
-                    new UserModel(){Id = 2, UserName="Jan Nowak", NormalizedUserName="Jan Nowak", Email="jan@example.com", NormalizedEmail="jan@example.com", EmailConfirmed=true, PasswordHash= hash("test2"), SecurityStamp = string.Empty}
+                    new UserModel(){Id = 1, UserName="Adam Nowak", NormalizedUserName="Adam Nowak", Email="adam@example.com", NormalizedEmail="adam@example.com", EmailConfirmed=true, SecurityStamp = string.Empty}.setPass("test1"),
+                    new UserModel(){Id = 2, UserName="Jan Nowak", NormalizedUserName="Jan Nowak", Email="jan@example.com", NormalizedEmail="jan@example.com", EmailConfirmed=true, SecurityStamp = string.Empty}.setPass("test2")
                 );
+
+            builder.Entity<Message>().HasData(
+                new Message(){Id=1, Date=DateTime.Now.AddDays(-2), UserId=2, Text="<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry.<br> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"},
+                new Message(){Id=2, Date=DateTime.Now.AddDays(-1), UserId=1, Text="<b>Lorem Ipsum</b> is <u>simply dummy text of the printing</u> and typesetting industry.<br> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"}  
+            );
 
             builder.Entity<InvoiceModel>()
                 .HasData(

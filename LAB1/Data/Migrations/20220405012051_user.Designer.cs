@@ -3,14 +3,16 @@ using System;
 using LAB1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LAB1.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220405012051_user")]
+    partial class user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1168,35 +1170,35 @@ namespace LAB1.Data.Migrations
                         {
                             ID = 1,
                             Address = "Fairview 5451, New Orleans - 6420, The Bahamas",
-                            Date = new DateTime(2022, 4, 5, 3, 36, 40, 177, DateTimeKind.Local).AddTicks(9496),
+                            Date = new DateTime(2022, 4, 5, 3, 20, 50, 837, DateTimeKind.Local).AddTicks(9430),
                             UserID = 1
                         },
                         new
                         {
                             ID = 2,
                             Address = "Garland - 2327, Dominican Republic",
-                            Date = new DateTime(2022, 4, 5, 3, 36, 40, 178, DateTimeKind.Local).AddTicks(14),
+                            Date = new DateTime(2022, 4, 5, 3, 20, 50, 837, DateTimeKind.Local).AddTicks(9958),
                             UserID = 1
                         },
                         new
                         {
                             ID = 3,
                             Address = "To nie moje, Ellerslie 5206, Wien - 7026, Morocco",
-                            Date = new DateTime(2022, 4, 5, 3, 36, 40, 178, DateTimeKind.Local).AddTicks(38),
+                            Date = new DateTime(2022, 4, 5, 3, 20, 50, 837, DateTimeKind.Local).AddTicks(9982),
                             UserID = 2
                         },
                         new
                         {
                             ID = 4,
                             Address = "Garfield 8152, Cincinnati - 6755, Djibouti",
-                            Date = new DateTime(2022, 4, 5, 3, 36, 40, 178, DateTimeKind.Local).AddTicks(58),
+                            Date = new DateTime(2022, 4, 5, 3, 20, 50, 838, DateTimeKind.Local).AddTicks(1),
                             UserID = 1
                         },
                         new
                         {
                             ID = 5,
                             Address = "Chesterfield  3014, Columbus - 2530, Grenada",
-                            Date = new DateTime(2022, 4, 5, 3, 36, 40, 178, DateTimeKind.Local).AddTicks(72),
+                            Date = new DateTime(2022, 4, 5, 3, 20, 50, 838, DateTimeKind.Local).AddTicks(16),
                             UserID = 1
                         });
                 });
@@ -1226,14 +1228,14 @@ namespace LAB1.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 4, 3, 3, 36, 40, 171, DateTimeKind.Local).AddTicks(9982),
+                            Date = new DateTime(2022, 4, 3, 3, 20, 50, 831, DateTimeKind.Local).AddTicks(7666),
                             Text = "<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry.<br> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             UserId = 2
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2022, 4, 4, 3, 36, 40, 177, DateTimeKind.Local).AddTicks(7823),
+                            Date = new DateTime(2022, 4, 4, 3, 20, 50, 837, DateTimeKind.Local).AddTicks(7872),
                             Text = "<b>Lorem Ipsum</b> is <u>simply dummy text of the printing</u> and typesetting industry.<br> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             UserId = 1
                         });
@@ -1269,14 +1271,14 @@ namespace LAB1.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "d962db90-0329-44b9-94f9-2ef870021bc8",
+                            ConcurrencyStamp = "ba945c6f-330d-486d-a23a-bbc3df6d54cc",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "3410c44c-4e16-4325-8584-01bb542262ce",
+                            ConcurrencyStamp = "ea446ad1-a8e9-4916-b2f3-13221e4ea777",
                             Name = "USER",
                             NormalizedName = "USER"
                         });
@@ -1351,13 +1353,13 @@ namespace LAB1.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac681ac2-6a08-487a-bb58-7a5142bd6e00",
+                            ConcurrencyStamp = "38f49cd7-0eba-4c6b-9642-6c7560a31bd1",
                             Email = "adam@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "adam@example.com",
                             NormalizedUserName = "Adam Nowak",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFqxsxhy09Wt75N1phQJa+SvfpW0Mqif/KgpIjIgvEAAu2KWpf2pHduh12VcrL0NDw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPOtCIqzRAthmz6IIcBAVTXgUWPkekvgjPgays7FF2MEpF7OYQ2mbahmZ8oy44wUDQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -1367,13 +1369,13 @@ namespace LAB1.Data.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "42b37eb1-78d9-400d-a248-dccf76df3a3b",
+                            ConcurrencyStamp = "20e4f1ef-fd38-4d17-b986-7b4d8fbf3c0a",
                             Email = "jan@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "jan@example.com",
                             NormalizedUserName = "Jan Nowak",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEdO3EGccaDKH7IW3vS+FOLTOdOCywHAzhXZJPfd0O1fRrGxD5nNguRV9UwgFGta9A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAqlbdIn2VZIh0fKZYbq2Hr7kvFvuRBq7iA341IDGU5zVpxtflM7zl1x7AzJepPwhA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
