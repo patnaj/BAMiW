@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using LAB1.Data;
 using LAB1.Models;
 
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+
 namespace LAB1.Controllers
 {
     public class ChatController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ChatController(ApplicationDbContext context)
+        
+        public ChatController(ApplicationDbContext context/*, UserManager<UserModel> userManager*/)
         {
             _context = context;
         }
@@ -46,9 +48,9 @@ namespace LAB1.Controllers
         }
 
         // GET: Chat/Create
+        [Authorize]
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -56,11 +58,15 @@ namespace LAB1.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Text,UserId,Date")] Message message)
+        public async Task<IActionResult> Create([Bind("Id,Text,Date")] Message message)
         {
-            if (ModelState.IsValid)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid && userId != null)
             {
+                message.UserId = int.Parse(userId);
+                message.Date = System.DateTime.Now;
                 _context.Add(message);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -70,6 +76,7 @@ namespace LAB1.Controllers
         }
 
         // GET: Chat/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,6 +97,7 @@ namespace LAB1.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Text,UserId,Date")] Message message)
         {
@@ -123,6 +131,7 @@ namespace LAB1.Controllers
         }
 
         // GET: Chat/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,6 +152,7 @@ namespace LAB1.Controllers
 
         // POST: Chat/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
