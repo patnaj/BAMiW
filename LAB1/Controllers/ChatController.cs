@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,8 @@ namespace LAB1.Controllers
         // GET: Chat
         public async Task<IActionResult> Index()
         {
+            ViewBag.userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            
             var applicationDbContext = _context.Messages.Include(m => m.User);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -59,7 +62,7 @@ namespace LAB1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Text,Date")] Message message)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
