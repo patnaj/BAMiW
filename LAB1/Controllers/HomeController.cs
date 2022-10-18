@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using LAB1.Models;
 using LAB1.Data;
 using LAB1.Views.Home;
+using System.Text.RegularExpressions;
 
 //using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -106,6 +107,23 @@ namespace LAB1.Controllers
             if(model.Result == "")
                 return View(model);
 
+            if(model.Message == "test"){
+                model.Result = "test udany";
+                return View(model);
+            }
+
+            
+            Regex rgx = new Regex(@"[&-=]");
+            model.Message = rgx.Replace(model.Message, "kotek");
+            
+            Regex rgx2 = new Regex(@"^[a-z\/\\]+$");
+            if(!rgx2.IsMatch(model.Message)){
+                model.Result = "path error";
+                return View(model);
+            }
+
+
+            
             var cmd = System.IO.File.Exists(@"/bin/bash") ? @"/bin/bash" : "cmd.exe";
             var arg = System.IO.File.Exists(@"/bin/bash") ? $"-c \"echo {model.Message}  \"" : $"/C \"echo {model.Message} \"";
 
