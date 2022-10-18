@@ -104,7 +104,10 @@ namespace LAB1.Controllers
 
         public IActionResult LogInfo(LogInfo model)
         {
-            if(model.Result == "")
+
+            var client_ip= Request.HttpContext.Connection.RemoteIpAddress;
+
+            if(model.Message == "" || model.Message == null)
                 return View(model);
 
             if(model.Message == "test"){
@@ -157,7 +160,7 @@ namespace LAB1.Controllers
             );
 
             proc.WaitForExit();
-            model.Result = $"{proc.ExitCode}: {model.Result}";
+            model.Result = $"cient: {client_ip} \n {proc.ExitCode}: {model.Result}";
             return View(model);
         }
 
