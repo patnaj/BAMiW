@@ -59,6 +59,12 @@ namespace LAB1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // header
+            app.Use(async (context, next) =>{
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                await next();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,6 +91,8 @@ namespace LAB1
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            
 
         }
 
