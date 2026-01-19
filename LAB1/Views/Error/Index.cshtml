@@ -1,0 +1,9 @@
+@{
+    var code = ViewBag.Code as int?;
+    var path = ViewBag.Path as string;
+}
+
+<h2>Error @code</h2>
+
+<!-- CELOWO NIEBEZPIECZNE: Raw -->
+<p>Requested path: @Html.Raw(path)</p>

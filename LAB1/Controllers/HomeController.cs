@@ -31,7 +31,7 @@ namespace LAB1.Controllers
         public int User_Id {get; set;}
 
     
-        public IActionResult Index(int? id, string find = null)
+        public IActionResult Index(int? id, string find = null, string address = null)
         {
             //HTTP Client v0.34.0 Marcel J. Kloubert
 
@@ -49,7 +49,18 @@ namespace LAB1.Controllers
 
             ViewBag.ID = id;
             ViewBag.find = find;
+            ViewBag.address = address;
             try{
+                if(address == null)
+                {
+                    address = Request.Cookies["address_filter"];
+                }
+
+                if(address!=null){
+                    Response.Cookies.Append("address_filter", address);
+                    ViewBag.address_list = _context.Database.SqlQueryRaw<string>($"SELECT [Address] FROM [Invoices] WHERE [Address] LIKE '%{address}%'").ToList();
+                }                    
+
                 if(id != null){
                     var res = _context.Invoices.FromSqlRaw($"SELECT * FROM [Invoices] WHERE [UserID]='{User_Id}' [ID]='{id}'");
                     return View(res.ToList());
@@ -58,7 +69,6 @@ namespace LAB1.Controllers
                     var res = _context.Invoices.FromSqlRaw($"SELECT * FROM [Invoices] WHERE [UserID]='{User_Id}' AND [Address] like '%{find}%'");
                     return View(res.ToList());    
                 }
-
                 return View(_context.Invoices.Where(m=>m.UserID == this.User_Id).ToList());
             } catch(Exception ex){
                 ModelState.AddModelError("Exeption", ex.Message);
@@ -116,14 +126,14 @@ namespace LAB1.Controllers
             }
 
             
-            Regex rgx = new Regex(@"[&-=]");
-            model.Message = rgx.Replace(model.Message, "kotek");
+            // Regex rgx = new Regex(@"[&-=]");
+            // model.Message = rgx.Replace(model.Message, "kotek");
             
-            Regex rgx2 = new Regex(@"^[a-z\/\\]+$");
-            if(!rgx2.IsMatch(model.Message)){
-                model.Result = "path error";
-                return View(model);
-            }
+            // Regex rgx2 = new Regex(@"^[a-z\/\\]+$");
+            // if(!rgx2.IsMatch(model.Message)){
+            //     model.Result = "path error";
+            //     return View(model);
+            // }
 
 
             

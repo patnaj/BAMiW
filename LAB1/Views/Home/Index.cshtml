@@ -13,7 +13,9 @@
         <input name="id" type="hidden" value="@ViewBag.ID">
         <div class="form-group mb-2">
             <label for="findId">Szukaj:</label>
-            <input value="@ViewBag.find" name="find" type="text" class="form-control" id="findId" aria-describedby="szukan pozycja" placeholder="szukan pozycja">
+            <input value="@ViewBag.find" name="find" type="text" class="form-control" id="findId" aria-describedby="szukan pozycja" placeholder="szukam pozycji">
+            <label for="findaddress">Szukaj adresów:</label>
+            <input value="@ViewBag.address" name="address" type="text" class="form-control" id="findaddress" aria-describedby="szukaj adresów" placeholder="szukam adresu">
         </div>
         <button type="submit" class="btn btn-primary mb-2">Szukaj</button>
     </form>
@@ -37,5 +39,10 @@
             }
         </tbody>
     </table>
+    
+    @if(ViewBag.address_list != null)
+    @foreach(var i in ViewBag.address_list){
+        @i<br/> 
+    }
 
 </div>

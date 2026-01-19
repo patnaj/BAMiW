@@ -69,10 +69,14 @@ namespace LAB1
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseExceptionHandler("/Error/Details");
+                app.UseStatusCodePagesWithReExecute("/Error/Index", "?code={0}");
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/Details");
+                app.UseStatusCodePagesWithReExecute("/Error/Index", "?code={0}");
+                // app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
